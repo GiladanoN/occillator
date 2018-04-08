@@ -9,10 +9,9 @@ if (userDivs && userDivs >= 5)
 
 let totalW = 400;
 let divW = totalW / divC;
-let step;
 
+let step;
 let curOff = 0;
-let colorArr = [];
 
 function setup()
 {
@@ -31,9 +30,8 @@ function draw()
 
   let angle;
   translate(-totalW/2, 0);
-  // let c = map(sin(curOff)/3, 0, TWO_PI/3, 0, 255);
-  let c = map(sin(curOff/8), -1, 1, 0, 255);
-  fill(c,80,100);
+  // let c = map(sin(curOff/8), -1, 1, 0, 255);
+  // fill(c,80,100);
   for (i=0; i<divC; i++) {
     push();
     translate(divW * (i+0.5), 0);
@@ -41,6 +39,9 @@ function draw()
     let d = dist(i+0.5, 0, divC/2, 0);
     let angle = map(d, 0, divC, 0, PI) + curOff;
     // angle = curOff + i*step;
+
+    c = (map(i, 0, divC, 0, 255) + (i+curOff)*10) %255;
+    fill(c,80,100);
 
     let val = abs(sin(angle));
     let h = map(val, 0, 1, minH, maxH);
