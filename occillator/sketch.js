@@ -15,10 +15,10 @@ let curOff = 0;
 
 function setup()
 {
-  createCanvas(600,400);
+  createCanvas(600,400,WEBGL);
   background(57);
 
-  // noStrokse();
+  // noStroke();
   colorMode(HSB, 255, 100, 100, 10);
   // step = PI/64;
   step = PI/128;
@@ -28,20 +28,29 @@ function draw()
 {
   background(57);
   rectMode(CENTER);
-  translate(width/2, height/2);
+  // translate(width/2, height/2);
 
-  translate(-totalW/2, 0);
+  translate(-350,0,0);
+  rotateY(-QUARTER_PI);
+  translate(0,200,0);
+  rotateX(-PI/8);
+  translate(-totalW/2, 0, -500);
 
   // c = (map(i, 0, divC, 0, 255) + (i+curOff)*10) %255;
   // c = (curOff*10) % 255;
   // fill(c,80,100);
 
   stripOff = curOff;
-  for (j=0; j<divC; j++, stripOff+=step) {
+  stripStep = HALF_PI / divC;
+  for (j=0; j<divC; j++) {
+    // let d = dist(j+0.5, 0, divC/2, 0);
+    // let angle = map(d, 0, divC, 0, PI) + curOff;
+    translate(0,0,divW);
     drawStrip(stripOff);
+    stripOff+=stripStep;
   }
 
-  drawStrip(curOff+HALF_PI);
+  // drawStrip(curOff+HALF_PI);
   curOff += step;
 
 }
@@ -62,7 +71,7 @@ function drawStrip(curOff)
 
     let val = abs(sin(angle));
     let h = map(val, 0, 1, minH, maxH);
-    rect(0,0,divW-2,h);
+    box(divW-2, h, divW-2);
     pop();
   }
 }
