@@ -9,16 +9,18 @@ if (userDivs && userDivs >= 5)
 
 let totalW = 400;
 let divW = totalW / divC;
-let angOff;
+let step;
 
-let ang = 0;
+let curOff = 0;
+let colorArr = [];
 
 function setup()
 {
   createCanvas(600,400);
   background(57);
 
-  angOff = PI/64;
+  colorMode(HSB, 255, 100, 100);
+  step = PI/64;
 }
 
 function draw()
@@ -26,28 +28,26 @@ function draw()
   background(57);
   rectMode(CENTER);
   translate(width/2, height/2);
-  let maxD = dist(divW * (0.5), 0, totalW/2, 0);
-  // console.log(maxD);
 
-  let curAng = ang;
+  let angle;
   translate(-totalW/2, 0);
-  for (i=0; i<divC; i++ ){// curAng+=angOff) {
+  // let c = map(sin(curOff)/3, 0, TWO_PI/3, 0, 255);
+  let c = map(sin(curOff/8), -1, 1, 0, 255);
+  fill(c,80,100);
+  for (i=0; i<divC; i++) {
     push();
     translate(divW * (i+0.5), 0);
 
-    // let d = dist(divW * (i+0.5), 0, totalW/2, 0);
-    // let curAng = map(d, 0, 2*maxD, 0, PI) + ang;
     let d = dist(i+0.5, 0, divC/2, 0);
-    let curAng = map(d, 0, divC, 0, PI) + ang;
-    // console.log(i+":"+d+","+curAng);
-    // curAng = ang + i*angOff;
+    let angle = map(d, 0, divC, 0, PI) + curOff;
+    // angle = curOff + i*step;
 
-    let val = abs(sin(curAng));
+    let val = abs(sin(angle));
     let h = map(val, 0, 1, minH, maxH);
     rect(0,0,divW-2,h);
     pop();
   }
-  ang += angOff;
+  curOff += step;
 
 }
 
@@ -64,33 +64,39 @@ function mouseClicked() {
   looping = !looping;
 }
 
+// function setup()
+// {
+//   createCanvas(600,400);
+//   background(57);
+//
+//   colorMode(HSB, 255, 100, 100);
+//   step = PI/64;
+// }
+//
 // function draw()
 // {
 //   background(57);
 //   rectMode(CENTER);
 //   translate(width/2, height/2);
 //
-//   console.log(width/2);
-//   console.log(-totalW/2);
-//
-//   let curAng = ang;
+//   let angle;
 //   translate(-totalW/2, 0);
-//   for (i=0; i<divC; i++, curAng+=angOff) {
+//   // let c = map(sin(curOff)/3, 0, TWO_PI/3, 0, 255);
+//   let c = map(sin(curOff/8), -1, 1, 0, 255);
+//   fill(c,80,100);
+//   for (i=0; i<divC; i++) {
 //     push();
-//     translate(divW * i, 0);
-//     let val = abs(sin(curAng));
+//     translate(divW * (i+0.5), 0);
+//
+//     let d = dist(i+0.5, 0, divC/2, 0);
+//     let angle = map(d, 0, divC, 0, PI) + curOff;
+//     // angle = curOff + i*step;
+//
+//     let val = abs(sin(angle));
 //     let h = map(val, 0, 1, minH, maxH);
-//
-//     let d = dist(divW * (i+0.5), 0, totalW/2, 0)
-//     console.log(i+","+d);
-//
 //     rect(0,0,divW-2,h);
-//     fill(0);
-//     ellipse(0,0, 5,5);
 //     pop();
 //   }
-//   // ang += angOff;
-//
-//   noLoop();
+//   curOff += step;
 //
 // }
